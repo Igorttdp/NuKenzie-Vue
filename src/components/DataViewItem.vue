@@ -23,14 +23,14 @@ const formatedType = computed(() => (!type ? 'Entrada' : 'Saída'))
 </script>
 
 <template>
-  <li class="data-item" :class="dataItemClass" @click="emit('delete')">
+  <li class="data-item" :class="dataItemClass">
     <div>
       <h4>{{ description }}</h4>
       <span>{{ formatedType }}</span>
     </div>
     <div>
       <span>{{ formatedValue }}</span>
-      <button class="delete-btn"></button>
+      <button class="delete-btn" @click="emit('delete')"></button>
     </div>
   </li>
 </template>
