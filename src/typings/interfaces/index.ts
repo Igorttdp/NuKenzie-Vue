@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 import type { DataType } from '../types'
 
 export interface IBaseButtonProps {
@@ -23,4 +23,5 @@ export interface IDataProviderProps {
   data: Ref<Array<IDataViewProps>>
   updateData(newData: IDataViewProps): void
   deleteItem(id: number): void
+  total: ComputedRef<number>
 }

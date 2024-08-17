@@ -3,13 +3,18 @@ import NuNavbar from '@/components/NuNavbar.vue'
 import DataViewSubmitForm from '@/components/DataViewSubmitForm.vue'
 import DataView from '@/components/DataView.vue'
 import DataProvider from '@/providers/data/DataProvider.vue'
+import TotalSummary from '@/components/TotalSummary.vue';
 </script>
 
 <template>
   <NuNavbar />
   <main>
     <DataProvider>
-      <DataViewSubmitForm />
+      <div>
+        <DataViewSubmitForm />
+        <TotalSummary />
+      </div>
+
       <DataView />
     </DataProvider>
   </main>
