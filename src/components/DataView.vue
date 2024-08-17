@@ -1,12 +1,10 @@
 <script setup lang="ts">
+import { dataInjectionKey } from '@/providers/data/keys'
 import DataViewItem from './DataViewItem.vue'
-import type { IDataViewItemProps } from '@/typings/interfaces'
+import { inject } from 'vue'
+import type { IDataProviderProps } from '@/typings/interfaces'
 
-const emit = defineEmits(['deleteItem'])
-
-const props = defineProps<{
-  dataArray: IDataViewItemProps[]
-}>()
+const { data } = inject(dataInjectionKey) as IDataProviderProps
 </script>
 
 <template>
@@ -15,7 +13,7 @@ const props = defineProps<{
       <h5>Resumo Financeiro</h5>
     </div>
     <div class="wrapper">
-      <template v-if="!props.dataArray.length">
+      <template v-if="!data.length">
         <h3>Você ainda não possui nenhum lançamento</h3>
         <ul :class="{ empty: true }">
           <li><img src="../assets/emptyCard.svg" alt="" /></li>
@@ -26,11 +24,11 @@ const props = defineProps<{
       <ul v-else>
         <DataViewItem
           :key="[data.description, '-', index].join()"
-          v-for="(data, index) in dataArray"
+          v-for="(data, index) in data"
           :description="data.description"
           :type="data.type"
           :value="data.value"
-          @delete="emit('deleteItem', index)"
+          :id="index"
         />
       </ul>
     </div>

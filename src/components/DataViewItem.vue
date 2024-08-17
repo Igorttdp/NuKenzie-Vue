@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import type { IDataViewItemProps } from '@/typings/interfaces'
-import { computed } from 'vue'
+import { dataInjectionKey } from '@/providers/data/keys'
+import type { IDataProviderProps, IDataViewItemProps } from '@/typings/interfaces'
+import { computed, inject } from 'vue'
 
-const emit = defineEmits(['delete'])
+const { deleteItem } = inject(dataInjectionKey) as IDataProviderProps
 
-const { description, type, value } = withDefaults(defineProps<IDataViewItemProps>(), {
+const { description, type, value, id } = withDefaults(defineProps<IDataViewItemProps>(), {
   description: '',
   type: 0,
-  value: 0
+  value: 0,
+  id: 0
 })
 
 const intl = new Intl.NumberFormat('pt-BR', {
@@ -30,7 +32,7 @@ const formatedType = computed(() => (!type ? 'Entrada' : 'Saída'))
     </div>
     <div>
       <span>{{ formatedValue }}</span>
-      <button class="delete-btn" @click="emit('delete')"></button>
+      <button class="delete-btn" @click="deleteItem(id)"></button>
     </div>
   </li>
 </template>

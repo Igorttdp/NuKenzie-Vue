@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { inject, reactive } from 'vue'
 import BaseButton from './BaseButton.vue'
-import type { IDataViewItemProps } from '@/typings/interfaces'
+import type { IDataProviderProps, INewDataViewItemProps } from '@/typings/interfaces'
+import { dataInjectionKey } from '@/providers/data/keys'
 
-const emit = defineEmits(['save'])
+const { updateData } = inject(dataInjectionKey) as IDataProviderProps
 
-const data = reactive<IDataViewItemProps>({ description: '', type: 0, value: null })
+const newData = reactive<INewDataViewItemProps>({ description: '', type: 0, value: null })
 
 const emitSave = () => {
-  emit('save', { ...data })
+  updateData({ ...newData })
 
-  data.description = ''
-  data.type = 0
-  data.value = null
+  newData.description = ''
+  newData.type = 0
+  newData.value = null
 }
 </script>
 
@@ -21,7 +22,7 @@ const emitSave = () => {
     <div class="inputLabel">
       <span>Descrição</span>
       <input
-        v-model="data.description"
+        v-model="newData.description"
         type="text"
         name="description"
         id="description"
@@ -35,7 +36,7 @@ const emitSave = () => {
         <span>Valor</span>
         <div>
           <input
-            v-model.number="data.value"
+            v-model.number="newData.value"
             type="text"
             name="value"
             id="value"
@@ -47,7 +48,7 @@ const emitSave = () => {
       </div>
       <div class="inputLabel">
         <span>Tipo de valor</span>
-        <select v-model="data.type" name="type" id="type">
+        <select v-model="newData.type" name="type" id="type">
           <option :value="0">Entrada</option>
           <option :value="1">Saída</option>
         </select>
